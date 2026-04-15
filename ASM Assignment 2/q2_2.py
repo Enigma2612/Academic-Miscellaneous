@@ -63,15 +63,30 @@ def A(ply):
     A = np.zeros((3,3))
     for i in range(0, z):
         A += t * C_matrices[ply[i]]
+    
+    return np.round(A/1e6,3)
 
 def B(ply):
-    z = len(ply)
     B = np.zeros((3,3))
-    mid = z/2
+    mid = len(ply)/2 * t
+    z = [(i*t) - mid for i in range(len(ply)+1)]
+
+    for i in range(len(ply)):
+        B += (z[i+1]**2 - z[i]**2)/2 * C_matrices[ply[i]]
+    
+    return np.round(-B,3)
     
 
 def D(ply):
-    ...
+    D = np.zeros((3,3))
+    mid = len(ply)/2 * t
+    z = [(i*t) - mid for i in range(len(ply)+1)]
+
+    for i in range(len(ply)):
+        D += (z[i+1]**3 - z[i]**3)/3 * C_matrices[ply[i]]
+    
+    return np.round(D,3)
+    
 
 #Data 
 
@@ -98,10 +113,14 @@ C_matrices = {}
 for angle in all_angles:
     C_matrices[angle] = get_new_C(S, angle)
 
+from pprint import pprint
 
-
-
-
-
-
-
+for ply in plies:
+    print(ply)
+    print("\nA\n")
+    pprint(A(ply))
+    print("\nB\n")
+    pprint(B(ply))
+    print("\nD\n")
+    pprint(D(ply))
+    print("\n" + "-"*40)

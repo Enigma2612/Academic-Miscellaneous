@@ -49,7 +49,7 @@ def save_data(S_vals):
 
     with open(path + '/q2_1_results.csv', 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(["Ø", "Ex (GPa)", "Ey (GPa)", "Gxy (GPa)", "vxy", "nxy,x", "nxy,y"])
+        writer.writerow(["θ (in degrees)", 'Eₓ (GPa)', 'Eᵧ (GPa)', 'Gₓᵧ (GPa)', 'νₓᵧ', 'ηₓᵧ,ₓ', 'ηₓᵧ,ᵧ'])
         writer.writerows(data)
         print("saved")
     return data
@@ -63,6 +63,8 @@ angles = [0, 20, 30, 45, 60, 70, 90]
 
 for angle in angles:
     S_vals.append([angle] + get_new_S(S, angle))
+
+save_data(S_vals)
 
 
 full_data = []
