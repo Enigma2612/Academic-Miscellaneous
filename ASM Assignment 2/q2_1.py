@@ -74,8 +74,6 @@ for i in ref_lis:
 full_data = np.linalg.matrix_transpose(np.matrix(full_data)).tolist()
 
 
-import matplotlib.pyplot as plt
-
 def setup_plot_style():
     plt.style.use('seaborn-v0_8-whitegrid')  # clean base
     
