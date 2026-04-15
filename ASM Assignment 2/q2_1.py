@@ -33,7 +33,8 @@ def get_new_S(S, x):   #x -> angle in degrees
 def save_data(S_vals):
     data = []
     for x in S_vals:
-        col = [1/x[0][0] * 1e-9, 1/x[1][1] * 1e-9, 1/x[2][2] * 1e-9, -x[1][0] / x[0][0], x[0][2]/x[2][2], x[1][2] / x[2][2]]
+        col = [x.pop(0)]
+        col += [1/x[0][0] * 1e-9, 1/x[1][1] * 1e-9, 1/x[2][2] * 1e-9, -x[1][0] / x[0][0], x[0][2]/x[2][2], x[1][2] / x[2][2]]
 
         col = [round(i, 3) for i in col]
         data.append(col)
@@ -42,7 +43,7 @@ def save_data(S_vals):
 
     with open(path + '/q2_1_results.csv', 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(["Ex (GPa)", "Ey (GPa)", "Gxy (GPa)", "vxy", "nxy,x", "nxy,y"])
+        writer.writerow(["Ø", "Ex (GPa)", "Ey (GPa)", "Gxy (GPa)", "vxy", "nxy,x", "nxy,y"])
         writer.writerows(data)
         print("saved")
 
@@ -52,6 +53,6 @@ S = [[1/data['E1'], -data['v21']/data['E2'], 0],
 
 S_vals = []
 for angle in [0, 20, 30, 45, 60, 70, 90]:
-    S_vals.append(get_new_S(S, angle))
+    S_vals.append([angle] + get_new_S(S, angle))
 
 save_data(S_vals)
